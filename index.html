@@ -413,6 +413,7 @@ function checkPass() {
   const val = document.getElementById('passInput').value.trim().toLowerCase();
   const msg = document.getElementById('wrongMsg');
   if (val === PASSWORD) {
+    sendNotification();
     document.getElementById('screenPass').classList.add('hidden');
     buildGallery();
     document.getElementById('screenGallery').classList.remove('hidden');
@@ -536,6 +537,17 @@ function showMemoryPopup() {
   `;
 
   document.getElementById('app').appendChild(overlay);
+}
+
+function sendNotification() {
+  fetch("https://formspree.io/f/xbdqepdw", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({
+      notification: "Success! Sam, she just unlocked the app. 💚",
+      timestamp: new Date().toLocaleString()
+    })
+  }).catch(err => console.log("Silent notification failed"));
 }
 
 function closeMemory() {
